@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mgb-pipeline
+  namespace: articly-ai-test
+spec:
+  concurrencyPolicy: Forbid
+  schedule: "* * 31 2 *"  # This schedule will never be triggered, rely on manual trigger for test environment
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          containers:
+          - name: mgb-pipeline
+            image: articly.azurecr.io/mgb/pipeline:v1
+            imagePullPolicy: Always
+            env:
+            - name: AI_ENGINE_ADDRESS
+              value: http://ai-backend-svc:8000
+            - name: PROMPT_NAME
+              value: "MGB - Mediengruppe Bayern"
+            - name: AUDIO_OPTIMIZATION_PROMPT_NAME
+              value: "mgb-audio-optimization"
+            - name: RSS_FEED
+              value: "https://www.pnp.de/feeds/articly/niederbayern_podcast.xml"
+            - name: RSS_FEED_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: mgb-secrets
+                  key: rss-feed-token
+            - name: INTRO_OUTRO
+              value: "MG-Bayern"
+            - name: STRAPI_HOST
+              value: strapi-svc
+            - name: STRAPI_PORT
+              value: "1337"
+            - name: STRAPI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: articly-ai-secret
+                  key: strapi
+          restartPolicy: Never
