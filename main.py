@@ -1,12 +1,11 @@
 import os
-import random
 
 from src.ai_engine_connector import AIEngineConnector
 from src.rss_consumer import RSSConsumer
 from src.strapi_connector import StrapiConnector
 # from src.utils import update_transcript_for_correct_pronounciations
 # from src.article_selection import select_articles
-# from src.article_crawler import enrich_articles
+from src.article_crawler import enrich_articles
 
 DEFAULT_AUDIO_OPT_PROMPT_NAME = 'MGB-audio-optimization'
 DEFAULT_PROMPT_NAME = 'MGB - Mediengruppe Bayern'
@@ -29,7 +28,7 @@ def main():
 
     # @TODO: Check if required
     # articles = select_articles(articles)
-    # articles = enrich_articles(articles)
+    articles = enrich_articles(articles)
 
     llm_input = "Begrüßung:\n" + intro_outro[0].get('intro') + "\n\n"
     for i, article in enumerate(articles):
@@ -42,8 +41,6 @@ def main():
     transcript = ai_engine.chat_gpt_call(transcript, audio_prompt)
     print("Second transcript")
     print(transcript)
-
-    # transcript = update_transcript_for_correct_pronounciations(transcript)
 
     audio_product_id = strapi.create_audio_product()
     strapi.create_transcript(
