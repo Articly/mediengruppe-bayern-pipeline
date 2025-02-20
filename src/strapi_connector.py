@@ -120,7 +120,7 @@ class StrapiConnector:
         #         f"Error: {response.text}"
         #     )
 
-    def create_transcript(self, order, llm_model, prompt, llm_input, transcript, audio_product_id) -> None:
+    def create_transcript(self, order, transcript, audio_product_id, llm_model=None, prompt=None, llm_input=None) -> None:
         url = f"{self.api_url}mgb-transcripts"
         headers = {
             "Content-Type": "application/json",

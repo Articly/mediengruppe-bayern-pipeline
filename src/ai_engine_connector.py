@@ -12,13 +12,16 @@ class AIEngineConnector:
         self.model = model_config['model']
 
 
-    def chat_gpt_call(self, text: str, prompt: str) -> str:
+    def chat_gpt_call(self, text: str, prompt: str, jsonify=False) -> str:
         llm_config = {
             'llm': self.llm,
             'model': self.model,
             "prompt": prompt,
             "input": text
         }
+        if jsonify:
+            llm_config['response_format'] = {"type": "json_object"}
+        
         print('Doing OpenAI ChatGPT call...')
         response = requests.post(self.ai_engine_address + self.llm_endpoint, json=llm_config)
 
