@@ -1,19 +1,16 @@
-[project]
+[tool.poetry]
 name = "mediengruppe-bayern-pipeline"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "sakshiAtArticly",email = "sakshi@articly.de"}
-]
+authors = ["sakshiAtArticly <sakshi@articly.de>"]
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "requests (>=2.32.3,<3.0.0)",
-    "feedparser (>=6.0.11,<7.0.0)",
-    "pydantic (>=2.10.6,<3.0.0)",
-    "bs4 (>=0.0.2,<0.0.3)"
-]
 
+[tool.poetry.dependencies]
+python = ">=3.12"
+requests = ">=2.32.3,<3.0.0"
+feedparser = ">=6.0.11,<7.0.0"
+pydantic = ">=2.10.6,<3.0.0"
+beautifulsoup4 = ">=4.12.0,<5.0.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
