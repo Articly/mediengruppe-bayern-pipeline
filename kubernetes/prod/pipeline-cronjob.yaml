@@ -6,7 +6,7 @@ metadata:
 spec:
   concurrencyPolicy: Forbid
   timeZone: "Europe/Berlin"
-  schedule: "30 9 * * 1-5"
+  schedule: "30 6 * * 1-5"
   jobTemplate:
     spec:
       backoffLimit: 0
