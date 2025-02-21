@@ -7,6 +7,7 @@ from src.strapi_connector import StrapiConnector
 # from src.utils import update_transcript_for_correct_pronounciations
 # from src.article_selection import select_articles
 from src.article_crawler import enrich_articles
+from src.utils import get_date_with_german_month
 
 DEFAULT_AUDIO_OPT_PROMPT_NAME = 'MGB-audio-optimization'
 DEFAULT_PROMPT_NAME = 'MGB - Mediengruppe Bayern New'
@@ -41,10 +42,13 @@ def main():
     teaser_and_topics = json.loads(teaser_and_topics_string)
     teaser = teaser_and_topics.get('teaser')
     topics = teaser_and_topics.get('topics')
+    topic_1_short_title = topics[0].get('topic_1_short_title')
     
     topics = [ai_engine.chat_gpt_call(topic, audio_prompt) for topic in topics]
+    
+    subtitle = f"Niederbayern-News vom {get_date_with_german_month()}"
 
-    audio_product_id = strapi.create_audio_product()
+    audio_product_id = strapi.create_audio_product(title=topic_1_short_title, subtitle=subtitle, description=intro + "\n" + teaser)
     
     strapi.create_transcript(
         order=0,
