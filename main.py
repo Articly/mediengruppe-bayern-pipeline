@@ -42,7 +42,7 @@ def main():
     teaser_and_topics = json.loads(teaser_and_topics_string)
     teaser = teaser_and_topics.get('teaser')
     topics = teaser_and_topics.get('topics')
-    topic_1_short_title = topics[0].get('topic_1_short_title')
+    topic_1_short_title = teaser_and_topics.get('topic_1_short_title')
     
     topics = [ai_engine.chat_gpt_call(topic, audio_prompt) for topic in topics]
     
