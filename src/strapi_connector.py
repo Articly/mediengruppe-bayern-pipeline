@@ -76,13 +76,17 @@ class StrapiConnector:
                 f"Error: {response.text}"
             )
 
-    def create_audio_product(self) -> int:
+    def create_audio_product(self, title, subtitle, description) -> int:
         url = f"{self.api_url}mgb-audio-products"
         headers = {
             "Content-Type": "application/json",
             "Authorization": f'Bearer {self.strapi_api_key}'
         }
-        data = {"data": {}}
+        data = {"data": {
+            "title": title,
+            "subtitle": subtitle,
+            "description": description,
+        }}
         response = requests.post(url, json=data, headers=headers)
 
         if response.status_code == 200 or response.status_code == 201:
@@ -120,7 +124,7 @@ class StrapiConnector:
         #         f"Error: {response.text}"
         #     )
 
-    def create_transcript(self, order, llm_model, prompt, llm_input, transcript, audio_product_id) -> None:
+    def create_transcript(self, order, transcript, audio_product_id, llm_model=None, prompt=None, llm_input=None) -> None:
         url = f"{self.api_url}mgb-transcripts"
         headers = {
             "Content-Type": "application/json",

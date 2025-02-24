@@ -1,11 +1,15 @@
+from datetime import datetime
 import os
 from typing import List, Dict
 
 from email.utils import parsedate_to_datetime
+from zoneinfo import ZoneInfo
 import requests
 import feedparser
 
 from src.schemas import Article
+
+germany_tz = ZoneInfo("Europe/Berlin")
 
 
 class RSSConsumer:
@@ -68,3 +72,7 @@ class RSSConsumer:
             except Exception as e:
                 print(f"Failed to parse article: {e}")
         return articles
+    
+    
+    def filter_out_last_n_hours(self, articles: List[Article], n_hours: int) -> List[Article]:
+        return [article for article in articles if (datetime.now(germany_tz) - article.date).total_seconds() / 3600 < n_hours]
