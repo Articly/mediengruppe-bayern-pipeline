@@ -1,4 +1,6 @@
+import datetime
 import json
+import logging
 import os
 
 from src.ai_engine_connector import AIEngineConnector
@@ -27,10 +29,18 @@ def main():
     # tags = []
     rss = RSSConsumer()
     articles = rss.fetch_articles()
+    # if it is monday get articles from the whole weekend, otherwise from the last day
+    if datetime.datetime.today().weekday() == 0:
+        monday = True
+    
+    if monday:
+        articles = rss.filter_out_last_n_hours(articles, 48)
+    else:
+        articles = rss.filter_out_last_n_hours(articles, 24)
+    
+    if len(articles) == 0:
+        raise Exception(f"No articles found from the last {'48' if monday else '24'} hours.")
 
-    # @TODO: Check if required
-    # articles = select_articles(articles)
-    # TODO: filter out articles using tag
     articles = enrich_articles(articles)
 
     intro, outro = intro_outro[0].get('intro'), intro_outro[1].get('outro')
