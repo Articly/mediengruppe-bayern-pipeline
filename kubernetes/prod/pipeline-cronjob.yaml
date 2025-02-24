@@ -34,10 +34,6 @@ spec:
               value: "MG-Bayern"
             - name: STRAPI_EXTERNAL_DOMAIN
               value: http://10.0.248.95:1337/
-            - name: STRAPI_HOST
-              value: strapi-svc
-            - name: STRAPI_PORT
-              value: "1337"
             - name: STRAPI_API_KEY
               valueFrom:
                 secretKeyRef:
