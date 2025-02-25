@@ -30,6 +30,7 @@ def main():
     rss = RSSConsumer()
     articles = rss.fetch_articles()
     # if it is monday get articles from the whole weekend, otherwise from the last day
+    monday = False
     if datetime.datetime.today().weekday() == 0:
         monday = True
     
