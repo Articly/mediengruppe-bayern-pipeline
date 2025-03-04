@@ -93,33 +93,6 @@ class StrapiConnector:
             raise Exception(f"Failed to create entry in Strapi.\nStatus Code: {response.status_code}.\nError: {response.text}")
         return entry_id
 
-    # def create_intro(self, transcript, audio_product_id) -> None:
-        # url = f"{self.api_url}pro7-transcripts"
-        # headers = {
-        #     "Content-Type": "application/json",
-        #     "Authorization": f'Bearer {self.strapi_api_key}'
-        # }
-        # data = {
-        #     "data": {
-        #         "type": "intro",
-        #         "order": 0,
-        #         "transcript": transcript,
-        #         "audio_product_id": audio_product_id
-        #     }
-        # }
-        # response = requests.post(url, json=data, headers=headers)
-
-        # if response.status_code in [200, 201]:
-        #     created_entry = response.json()
-        #     entry_id = created_entry.get('data', {}).get('id')
-        #     print(f"Entry created with ID: {entry_id}")
-        # else:
-        #     raise Exception(
-        #         f"Failed to create entry in Strapi.\n"
-        #         f"Status Code: {response.status_code}.\n"
-        #         f"Error: {response.text}"
-        #     )
-
     def create_transcript(self, order, llm_model, prompt, llm_input, transcript, audio_product_id) -> None:
         url = f"{self.api_url}mgb-transcripts"
         headers = {
@@ -149,30 +122,3 @@ class StrapiConnector:
                 f"Status Code: {response.status_code}.\n"
                 f"Error: {response.text}"
             )
-
-    # def create_outro(self, order, transcript, audio_product_id) -> None:
-        # url = f"{self.api_url}pro7-transcripts"
-        # headers = {
-        #     "Content-Type": "application/json",
-        #     "Authorization": f'Bearer {self.strapi_api_key}'
-        # }
-        # data = {
-        #     "data": {
-        #         "type": "outro",
-        #         "order": order,
-        #         "transcript": transcript,
-        #         "audio_product_id": audio_product_id
-        #     }
-        # }
-        # response = requests.post(url, json=data, headers=headers)
-
-        # if response.status_code in [200, 201]:
-        #     created_entry = response.json()
-        #     entry_id = created_entry.get('data', {}).get('id')
-        #     print(f"Entry created with ID: {entry_id}")
-        # else:
-        #     raise Exception(
-        #         f"Failed to create entry in Strapi.\n"
-        #         f"Status Code: {response.status_code}.\n"
-        #         f"Error: {response.text}"
-        #     )
