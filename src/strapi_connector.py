@@ -76,7 +76,7 @@ class StrapiConnector:
                 f"Error: {response.text}"
             )
 
-    def create_audio_product(self, title, subtitle, description) -> int:
+    def create_audio_product(self, title, subtitle, description, whatsapp_text_message) -> int:
         url = f"{self.api_url}mgb-audio-products"
         headers = {
             "Content-Type": "application/json",
@@ -86,6 +86,7 @@ class StrapiConnector:
             "title": title,
             "subtitle": subtitle,
             "description": description,
+            "whatsapp_text_message": whatsapp_text_message
         }}
         response = requests.post(url, json=data, headers=headers)
 

@@ -59,7 +59,11 @@ def main():
     
     subtitle = f"Niederbayern-News vom {get_date_with_german_month()}"
 
-    audio_product_id = strapi.create_audio_product(title=topic_1_short_title, subtitle=subtitle, description=intro + "\n" + teaser)
+    audio_product_id = strapi.create_audio_product(
+        title=topic_1_short_title,
+        subtitle=subtitle, description=intro + "\n" + teaser,
+        whatsapp_text_message=teaser + "\n🎵🎧 Dir gefällt dieser Audio-Service? Dann lass gerne einen Daumen da 👍"
+    )
     
     strapi.create_transcript(
         order=0,
