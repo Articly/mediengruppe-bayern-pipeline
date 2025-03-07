@@ -31,7 +31,7 @@ spec:
                   name: mgb-secrets
                   key: rss-feed-token
             - name: INTRO_OUTRO
-              value: "MG-Bayern"
+              value: "MG-Bayern-v2"
             - name: STRAPI_EXTERNAL_DOMAIN
               value: http://10.0.157.129:1337/
             - name: STRAPI_API_KEY
