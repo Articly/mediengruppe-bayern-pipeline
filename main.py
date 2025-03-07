@@ -53,11 +53,12 @@ def main():
     teaser_and_topics = json.loads(teaser_and_topics_string)
     teaser = teaser_and_topics.get('teaser')
     topics = teaser_and_topics.get('topics')
-    topic_1_short_title = teaser_and_topics.get('topic_1_short_title')
+    # topic_1_short_title = f"{teaser_and_topics.get('topic_1_short_title')}  | Niederbayern-News vom {get_date_with_german_month()}"
+    topic_1_short_title = f"{teaser_and_topics.get('topic_1_short_title')}  - Niederbayern-News vom {get_date_with_german_month()}"
     
     topics = [ai_engine.chat_gpt_call(topic, audio_prompt) for topic in topics]
     
-    subtitle = f"Niederbayern-News vom {get_date_with_german_month()}"
+    subtitle = "Tägliche Nachrichten aus deiner Region"
 
     audio_product_id = strapi.create_audio_product(
         title=topic_1_short_title,
