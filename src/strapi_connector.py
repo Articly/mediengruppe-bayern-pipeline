@@ -1,5 +1,6 @@
 import os
 import requests
+from src.schemas import create_instance_from_dynamic_zone
 from src.utils import get_date_with_german_month
 
 
@@ -60,8 +61,8 @@ class StrapiConnector:
 
 
     def get_model_config(self) -> dict:
-        # url = f"{self.api_url}mgb-audio-config?populate=chatgpt"
-        url = f"{self.api_url}pro7-audio-config?populate=chatgpt"
+        url = f"{self.api_url}mgb-audio-config?populate=llm"
+        
         headers = {
             "Content-Type": "application/json",
             "Authorization": f'Bearer {self.strapi_api_key}'
@@ -69,10 +70,12 @@ class StrapiConnector:
         response = requests.get(url, headers=headers)
 
         if response.status_code == 200:
-            config = response.json()
-            chatgpt_config = config.get('data', {}).get('attributes', {}).get('chatgpt', {})
-            self_hosted = chatgpt_config.get('self_hosted')
-            model = chatgpt_config.get('model')
+            config = response.json()["data"]["attributes"]
+            chatgpt_config_json = config.get('llm')[0]
+            chatgpt_config = create_instance_from_dynamic_zone(chatgpt_config_json)
+            
+            self_hosted = chatgpt_config.self_hosted
+            model = chatgpt_config.model
             return {'self_hosted': self_hosted, 'model': model}
         else:
             raise Exception(
