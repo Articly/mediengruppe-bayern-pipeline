@@ -14,7 +14,7 @@ spec:
         spec:
           containers:
           - name: mgb-pipeline
-            image: articly.azurecr.io/mgb/pipeline:v1
+            image: articly.azurecr.io/mgb/pipeline:v3.1
             imagePullPolicy: Always
             env:
             - name: AI_ENGINE_ADDRESS
@@ -31,7 +31,7 @@ spec:
                   name: mgb-secrets
                   key: rss-feed-token
             - name: INTRO_OUTRO
-              value: "MG-Bayern"
+              value: "MG-Bayern-v2"
             - name: STRAPI_EXTERNAL_DOMAIN
               value: http://10.0.157.129:1337/
             - name: STRAPI_API_KEY
