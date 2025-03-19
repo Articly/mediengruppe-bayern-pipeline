@@ -9,7 +9,7 @@ from src.strapi_connector import StrapiConnector
 # from src.utils import update_transcript_for_correct_pronounciations
 # from src.article_selection import select_articles
 from src.article_crawler import enrich_articles
-from src.utils import get_date_with_german_month
+from src.utils import get_date_with_german_month, get_date_with_german_month_without_year
 
 DEFAULT_AUDIO_OPT_PROMPT_NAME = 'MGB-audio-optimization'
 DEFAULT_PROMPT_NAME = 'MGB - Mediengruppe Bayern New'
@@ -57,18 +57,20 @@ def main():
     topic_1_short_title = f"{teaser_and_topics.get('topic_1_short_title')}  - Niederbayern-News vom {get_date_with_german_month()}"
     
     topics = [ai_engine.chat_gpt_call(topic, audio_prompt) for topic in topics]
+    intro_audio_optimized = ai_engine.chat_gpt_call(intro, audio_prompt)
+    teaser_audio_optimized = ai_engine.chat_gpt_call(teaser, audio_prompt)
     
     subtitle = "Tägliche Nachrichten aus deiner Region"
 
     audio_product_id = strapi.create_audio_product(
         title=topic_1_short_title,
         subtitle=subtitle, description=intro + "\n" + teaser,
-        whatsapp_text_message=teaser + "\n🎵🎧 Dir gefällt dieser Audio-Service? Dann lass gerne einen Daumen da 👍"
+        whatsapp_text_message=f"Willkommen zu deinem täglichen News-Update. Das sind die Themen am {get_date_with_german_month_without_year()}: " + teaser + "\n🎵🎧 Dir gefällt dieser Audio-Service? Dann lass gerne einen Daumen da 👍"
     )
     
     strapi.create_transcript(
         order=0,
-        transcript=intro + "\n"  + teaser,
+        transcript=intro_audio_optimized + "\n"  + teaser_audio_optimized,
         audio_product_id=audio_product_id
     )
     for i, topic in enumerate(topics):

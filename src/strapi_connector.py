@@ -1,7 +1,7 @@
 import os
 import requests
 from src.schemas import create_instance_from_dynamic_zone
-from src.utils import get_date_with_german_month
+from src.utils import get_date_with_german_month_without_year
 
 
 class StrapiConnector:
@@ -34,7 +34,7 @@ class StrapiConnector:
         return prompt
     
     def format_intro(self, intro_text: str) -> str:
-        return intro_text.replace('<date_format>', get_date_with_german_month())
+        return intro_text.replace('<date_format>', get_date_with_german_month_without_year())
 
     def get_intro_and_outro(self) -> str:
         intro_and_outro = []
